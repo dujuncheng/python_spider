@@ -72,9 +72,7 @@ def save_one_page(arr, start, worksheet):
         for i in range(len(arr)):
             values = list(arr[i].values())
             for x in range(len(values)):
-                start_index = i + start
-                print( 'start_index' + str(start_index) )
-                worksheet.write(start_index, x, str(values[x]))  # 不带样式的写入
+                worksheet.write(i, x, str(values[x]))  # 不带样式的写入
         print('success')
     except:
         print('fail in writinge')
@@ -82,8 +80,8 @@ def save_one_page(arr, start, worksheet):
 
 def get_and_save (num) :
     workbook = xlwt.Workbook(encoding='utf-8')
-    worksheet = workbook.add_sheet('page')
     for i in range(num):
+        worksheet = workbook.add_sheet('page' + str(i))
         url = 'https://bj.lianjia.com/zufang/pg' + str(i)+ '/'
         try:
             one_page_arr = get_page(url)
@@ -91,7 +89,7 @@ def get_and_save (num) :
         except:
             print('fail in wrap')
 
-    workbook.save('5000页的数据.xls')
+        workbook.save('page.xls')
 
 
 get_and_save(5000)
